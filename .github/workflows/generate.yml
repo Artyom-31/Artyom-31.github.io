@@ -37,7 +37,7 @@ jobs:
       - name: Generate HTML with random number
         run: |
           echo "🚀 Запуск генератора..."
-          go run generate.go
+          go run main.go
           echo "✅ Генерация завершена!"
       
       # 4. Показываем результат (для отладки)
