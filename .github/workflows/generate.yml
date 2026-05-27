@@ -62,9 +62,9 @@ jobs:
           
   copy_and_archive:
     runs-on: ubuntu-latest
-    
+    needs: [build]
     steps:
     - name: copying and archive site config
       run: |
-        echo "начало копирования папки ..."
-        zip -r index.html
+        echo "начало архивации..."
+        zip -r archive.zip .
