@@ -79,40 +79,115 @@ func main() {
             color: white;
             border: none;
             padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+package main
+
+import (
+	"fmt"
+	"os"
+	"time"
+)
+
+func main() {
+	// Получаем текущее время
+	now := time.Now().Format("15:04:05 02.01.2006")
+	
+	// Создаём HTML с красным X на чёрном фоне
+	html := fmt.Sprintf(`<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>░ X ░</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        button:hover {
-            background: #1a2a3a;
+        
+        body {
+            background-color: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .x {
+            font-size: 40vw;
+            font-weight: bold;
+            color: #8B0000;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        
+        .x:hover {
+            transform: scale(1.05);
+            color: #FF0000;
+            text-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+        }
+        
+        .x:active {
+            transform: scale(0.95);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; text-shadow: 0 0 10px rgba(139, 0, 0, 0.3); }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(139, 0, 0, 0.8); }
+            100% { opacity: 0.8; text-shadow: 0 0 10px rgba(139, 0, 0, 0.3); }
+        }
+        
+        .timestamp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #333;
+            font-size: 10px;
+            font-family: monospace;
+        }
+        
+        .instruction {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #222;
+            font-size: 10px;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .x {
+                font-size: 60vw;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎲 Случайное число</h1>
-        <div class="number">%d</div>
-        <p>✨ Сгенерировано автоматически ✨</p>
-        <button onclick="location.reload()">🔄 Обновить страницу</button>
-        <div class="info">
-            <div>⚡ Число генерируется при каждой сборке GitHub Actions</div>
-            <div>📅 Последняя генерация: %s</div>
-            <div class="badge">🚀 Автоматический деплой через GitHub Actions</div>
-        </div>
+        <div class="x" onclick="location.reload()">✘</div>
     </div>
+    <div class="timestamp">%s</div>
+    <div class="instruction">click to refresh</div>
 </body>
-</html>`, randomNum, currentTime)
-
-	// Записываем HTML в файл index.html
+</html>`, now)
+	
+	// Записываем в файл
 	err := os.WriteFile("index.html", []byte(html), 0644)
 	if err != nil {
 		fmt.Println("❌ Ошибка при записи файла:", err)
 		os.Exit(1)
 	}
-
+	
 	fmt.Println("✅ index.html успешно сгенерирован!")
-	fmt.Printf("🎲 Случайное число: %d\n", randomNum)
-	fmt.Printf("🕐 Время генерации: %s\n", currentTime)
+	fmt.Println("🗻 Дизайн: красный X на чёрном фоне")
 }
