@@ -13,7 +13,7 @@ func main() {
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>░ X ░</title>
+    <title>X</title>
     <style>
         * {
             margin: 0;
@@ -29,6 +29,47 @@ func main() {
             font-family: 'Courier New', monospace;
         }
         .x {
+            font-size: 40vw;
+            font-weight: bold;
+            color: #8B0000;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        .x:hover {
+            transform: scale(1.05);
+            color: #FF0000;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(139, 0, 0, 0.8); }
+            100% { opacity: 0.8; }
+        }
+        .timestamp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #333;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="x" onclick="location.reload()">X</div>
+    </div>
+    <div class="timestamp">` + now + `</div>
+</body>
+</html>`
+
+	err := os.WriteFile("index.html", []byte(html), 0644)
+	if err != nil {
+		fmt.Println("Error writing file:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("index.html generated successfully")
+}        .x {
             font-size: 40vw;
             font-weight: bold;
             color: #8B0000;
