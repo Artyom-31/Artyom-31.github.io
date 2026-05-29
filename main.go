@@ -9,26 +9,63 @@ import (
 func main() {
 	now := time.Now().Format("15:04:05 02.01.2006")
 
-	html := `<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <title>X</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #000000;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-        }
-        .x {
+	html := "<!DOCTYPE html>\n"
+	html += "<html lang=\"ru\">\n"
+	html += "<head>\n"
+	html += "    <meta charset=\"utf-8\">\n"
+	html += "    <title>X</title>\n"
+	html += "    <style>\n"
+	html += "        * { margin: 0; padding: 0; box-sizing: border-box; }\n"
+	html += "        body {\n"
+	html += "            background-color: #000000;\n"
+	html += "            min-height: 100vh;\n"
+	html += "            display: flex;\n"
+	html += "            justify-content: center;\n"
+	html += "            align-items: center;\n"
+	html += "            font-family: 'Courier New', monospace;\n"
+	html += "        }\n"
+	html += "        .x {\n"
+	html += "            font-size: 40vw;\n"
+	html += "            font-weight: bold;\n"
+	html += "            color: #8B0000;\n"
+	html += "            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);\n"
+	html += "            animation: pulse 2s ease-in-out infinite;\n"
+	html += "            cursor: pointer;\n"
+	html += "        }\n"
+	html += "        .x:hover {\n"
+	html += "            transform: scale(1.05);\n"
+	html += "            color: #FF0000;\n"
+	html += "        }\n"
+	html += "        @keyframes pulse {\n"
+	html += "            0% { opacity: 0.8; }\n"
+	html += "            50% { opacity: 1; text-shadow: 0 0 30px rgba(139, 0, 0, 0.8); }\n"
+	html += "            100% { opacity: 0.8; }\n"
+	html += "        }\n"
+	html += "        .timestamp {\n"
+	html += "            position: fixed;\n"
+	html += "            bottom: 20px;\n"
+	html += "            right: 20px;\n"
+	html += "            color: #333;\n"
+	html += "            font-size: 10px;\n"
+	html += "        }\n"
+	html += "    </style>\n"
+	html += "</head>\n"
+	html += "<body>\n"
+	html += "    <div class=\"container\">\n"
+	html += "        <div class=\"x\" onclick=\"location.reload()\">X</div>\n"
+	html += "    </div>\n"
+	html += "    <div class=\"timestamp\">" + now + "</div>\n"
+	html += "</body>\n"
+	html += "</html>\n"
+
+	err := os.WriteFile("index.html", []byte(html), 0644)
+	if err != nil {
+		fmt.Println("Error writing file:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("index.html generated successfully")
+}        .x {
             font-size: 40vw;
             font-weight: bold;
             color: #8B0000;
