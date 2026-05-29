@@ -60,7 +60,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: copying and archive site config
-        run: |
-          echo "начало архивации..."
-          zip -r archive.zip index.html
