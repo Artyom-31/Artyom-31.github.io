@@ -1,18 +1,12 @@
 name: Generate Random Number Site
 
 on:
-  # Запуск при пуше в ветку main
   push:
     branches: [main]
-  
-  # Запуск по расписанию (каждый час)
   schedule:
     - cron: '0 * * * *'
-  
-  # Ручной запуск из интерфейса GitHub
   workflow_dispatch:
 
-# Разрешения для деплоя в GitHub Pages
 permissions:
   contents: write
   pages: write
@@ -23,7 +17,34 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      
+      - name: Generate HTML
+        run: |
+          echo "Запуск генератора..."
+          go run main.go
+          echo "Генерация завершена!"
+      
+      - name: Show generated file
+        run: |
+          echo "Содержимое index.html:"
+          head -20 index.html
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "GitHub Actions Bot"
+          git config --local user.email "actions@github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Update index.html"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      # 1. Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v4
       
