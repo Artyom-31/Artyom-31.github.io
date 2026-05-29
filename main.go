@@ -2,36 +2,85 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
 )
 
 func main() {
-	// Инициализируем генератор случайных чисел
-	rand.Seed(time.Now().UnixNano())
+	now := time.Now().Format("15:04:05 02.01.2006")
 
-	// Генерируем случайное число от 1 до 100
-	randomNum := rand.Intn(100) + 1
-
-	// Текущее время для отображения
-	currentTime := time.Now().Format("02.01.2006 15:04:05")
-
-	// Создаём HTML-контент
-	html := fmt.Sprintf(`<!DOCTYPE html>
+	html := `<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Случайное число | DevOps практика</title>
+    <title>░ X ░</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background-color: #81D8D6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            padding: 50px;
+            background-color: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+        }
+        .x {
+            font-size: 40vw;
+            font-weight: bold;
+            color: #8B0000;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        .x:hover {
+            transform: scale(1.05);
+            color: #FF0000;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(139, 0, 0, 0.8); }
+            100% { opacity: 0.8; }
+        }
+        .timestamp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #333;
+            font-size: 10px;
+        }
+        .instruction {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #222;
+            font-size: 10px;
+        }
+        @media (max-width: 768px) {
+            .x { font-size: 60vw; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="x" onclick="location.reload()">✘</div>
+    </div>
+    <div class="timestamp">` + now + `</div>
+    <div class="instruction">click to refresh</div>
+</body>
+</html>`
+
+	err := os.WriteFile("index.html", []byte(html), 0644)
+	if err != nil {
+		fmt.Println("Ошибка при записи файла:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("index.html успешно сгенерирован!")
+}            padding: 50px;
             margin: 0;
         }
         .container {
